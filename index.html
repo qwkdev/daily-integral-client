@@ -6,64 +6,16 @@
 	<title>Document</title>
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
-<script>
-  const { ze } = luxon;
+	<script>
+		const timezone = 'Australia/Sydney';
+		const startDate = new Date(new Date("2025-09-16").toLocaleString("en-US", { timeZone: timezone }));
+		function getDate(isoDate) {
+			const target = new Date(
+				new Date(...(isoDate ? [isoDate] : [])).toLocaleString("en-US", { timeZone: timezone })
+			);
+			return Math.floor((target - startDate) / (24 * 60 * 60 * 1000)) + 2;
+		}
 
-
-TG=ze.fromISO("2025-09-16",{zone:"Australia/Sydney"});
-function _Ue(){const t=ze.now().setZone("Australia/Sydney");return Math.floor(t.diff(TG,"days").days)}
-function EUe(t){if(t){const e=ze.fromISO(t,{zone:"Australia/Sydney"});return Math.floor(e.diff(TG,"days").days)+1}return _Ue()+1}
-
-
-function EUe2(t) {
-  const base = ze.fromISO("2025-09-16", { zone: "Australia/Sydney" });
-
-  if (t) {
-    const d = ze.fromISO(t, { zone: "Australia/Sydney" });
-    return Math.floor(d.diff(base, "days").days) + 1;
-  }
-
-  const now = ze.now().setZone("Australia/Sydney");
-  return Math.floor(now.diff(base, "days").days) + 1;
-}
-
-function calculateDayIndex(isoDate) {
-  const timezone = "Australia/Sydney";
-
-  const referenceDate = new Date(
-    new Date("2025-09-16").toLocaleString("en-US", { timeZone: timezone })
-  );
-
-  const targetDate = isoDate
-    ? new Date(new Date(isoDate).toLocaleString("en-US", { timeZone: timezone }))
-    : new Date(new Date().toLocaleString("en-US", { timeZone: timezone }));
-
-  const millisecondsPerDay = 24 * 60 * 60 * 1000;
-
-  return Math.floor((targetDate - referenceDate) / millisecondsPerDay) + 2;
-}
-
-const timezone = 'Australia/Sydney';
-const startDate = new Date(new Date("2025-09-16").toLocaleString("en-US", { timeZone: timezone }));
-function getDate(isoDate) {
-	const target = new Date(
-		new Date(...(isoDate ? [isoDate] : [])).toLocaleString("en-US", { timeZone: timezone })
-	);
-	return Math.floor((target - startDate) / (24 * 60 * 60 * 1000)) + 2;
-}
-
-
-console.log(EUe());
-console.log(EUe2());
-console.log(calculateDayIndex());
-console.log(getDate());
-
-console.log(EUe('2025-09-16'));
-console.log(EUe2('2025-09-16'));
-console.log(calculateDayIndex('2025-09-16'));
-console.log(getDate('2025-09-16'));
-
-</script>
+	</script>
 </body>
 </html>
