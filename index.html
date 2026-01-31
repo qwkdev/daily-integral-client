@@ -6,11 +6,19 @@
 		:root {
 			--u: 1.4vh;
 
+			--modal-bg: #06060888;
 			--bg: #161618;
 			--bg2: #2a2a2b;
 			--bg3: #444445;
+			--bg4: #777779;
 
 			--grid: round(calc(2 * var(--u)), 10px);
+		}
+		*::selection {
+			background: #fff7;
+		}
+		*[hidden] {
+			display: none;
 		}
 
 		.btn {
@@ -40,9 +48,6 @@
 		}
 		.btn:focus {
 			outline: none;
-		}
-		.btn::selection {
-			background: var(--c);
 		}
 
 		body {
@@ -83,6 +88,7 @@
 		.panel h1 {
 			font-size: calc(3 * var(--u));
 			font-weight: 700;
+			margin-bottom: calc(.5 * var(--u));
 		}
 		.panel h2 {
 			font-size: calc(1.5 * var(--u));
@@ -98,6 +104,39 @@
 			left: 50%;
 			transform: translate(-50%, -50%);
 		}
+
+		input {
+			width: 100%;
+
+			box-sizing: border-box;
+			padding: calc(.5 * var(--u));
+			background: var(--bg2);
+			border: 1px solid var(--bg3);
+
+			font-family: monospace;
+			font-size: calc(1.5 * var(--u));
+			color: #fff;
+			transition: .3s;
+
+			&:focus {
+				outline: none;
+				border-color: var(--bg4);
+			}
+			&::placeholder {
+				color: var(--bg4);
+			}
+		}
+
+		input::-webkit-outer-spin-button,
+		input::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+		input[type=number] {
+			-moz-appearance: textfield;
+			appearance: textfield;
+		}
+
 
 		.topic {
 			display: flex;
@@ -133,12 +172,165 @@
 			--l: .6;
 		}
 
+		.action {
+			--h: 250;
+			--s: 1;
+			--l: 1;
+		}
+		.action1 {
+			--h: 135;
+			--s: .7;
+			--l: .8;
+		}
+		.action2 {
+			--h: 0;
+			--s: .8;
+			--l: .5;
+		}
+
+		.dropdown {
+			width: 100%;
+			height: max-content;
+
+			box-sizing: border-box;
+			border: 1px solid var(--bg2);
+			font-family: monospace;
+			color: #fff;
+			position: relative;
+			padding: calc(1 * var(--u));
+
+			.toggle {
+				position: relative;
+				/* padding: calc(1 * var(--u)); */
+				font-size: calc(2 * var(--u));
+				
+				svg {
+					height: 80%;
+					width: auto;
+					position: absolute;
+					top: 10%;
+					right: 1%;
+					transition: .2s;
+					stroke: #fff;
+				}
+				&:has(+ .content[hidden]) svg {
+					top: 9%;
+					right: .5%;
+					transform: rotate(-90deg);
+				}
+			}
+			.content {
+				margin-top: calc(1 * var(--u));
+
+				p {
+					margin: 0;
+					font-size: calc(1 * var(--u));
+				}
+				b {
+					font-weight: 700;
+				}
+			}
+		}
+
+		dialog {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			background: var(--modal-bg);
+
+			.modal {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+
+				width: calc(40 * var(--u));
+				height: max-content;
+				max-height: 80vh;
+				overflow-y: scroll;
+
+				box-sizing: border-box;
+				background: var(--bg);
+				border: 1px solid var(--bg2);
+				padding: calc(1 * var(--u));
+				font-family: monospace;
+				color: #fff;
+				position: relative;
+
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: calc(1 * var(--u));
+
+				h1 {
+					font-size: calc(2 * var(--u));
+					font-weight: 700;
+					margin: 0;
+
+					display: flex;
+					gap: calc(.5 * var(--u));
+					align-items: center;
+
+					span {
+						font-size: calc(1.5 * var(--u));
+						padding: calc(.2 * var(--u)) calc(.5 * var(--u)) calc(.3 * var(--u)) calc(.5 * var(--u));
+					}
+				}
+
+				#puzzle {
+					width: 100%;
+					height: max-content;
+					flex: 0 0 auto;
+
+					box-sizing: border-box;
+					border: 1px solid var(--bg2);
+					padding: calc(1 * var(--u));
+					padding-bottom: calc(.9 * var(--u));
+					font-family: monospace;
+					color: #fff;
+					position: relative;
+
+					overflow-x: scroll;
+					font-size: calc(1 * var(--u));
+
+					display: flex;
+					justify-content: center;
+					flex-direction: column;
+
+					.math-block {
+						height: max-content !important;
+					}
+				}
+
+				#check {
+					width: 100%;
+					display: flex;
+					gap: calc(.5 * var(--u));
+
+					button {
+						font-size: calc(1.5 * var(--u));
+						padding: calc(.2 * var(--u)) calc(.5 * var(--u)) calc(.3 * var(--u)) calc(.5 * var(--u));
+					}
+				}
+
+				.dropdown .content {
+					height: max-content;
+					/* max-height: 20vh; */
+					overflow-y: scroll;
+				}
+			}
+		}
+
 		@media only screen and (max-aspect-ratio: 1/1) {
 			:root {
 				--u: 2vw;
 			}
 		}
 	</style>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 </head>
 <body>
 	<div id="grid">
@@ -150,13 +342,53 @@
 		</div>
 		<div class="panel topic">
 			<h1>Example</h1>
-			<div class="logo" id="ilogo">&int;</div>
+			<!-- <div class="logo" id="ilogo">&int;</div> -->
 			<button class="btn clr1">Beginner</button>
 			<button class="btn clr2">Easy</button>
 			<button class="btn clr3">Medium</button>
 			<button class="btn clr4">Hard</button>
 		</div>
+		<div class="panel topic">
+			<h1>Example</h1>
+			<button class="btn clr2">Easy</button>
+			<button class="btn clr3">Medium</button>
+			<button class="btn clr4">Hard</button>
+		</div>
+		<div class="panel topic">
+			<h1>Example</h1>
+			<button class="btn clr1">Limit</button>
+		</div>
 	</div>
+
+	<dialog id="question-modal">
+		<div class="modal">
+			<h1><span class="btn clr2">Easy</span>Integral</h1>
+			<div id="puzzle"></div>
+			<div id="check">
+				<input id="answer-input" type="text" inputmode="decimal" placeholder="Type answer here..." oninput="fixInput(this)">
+				<button class="btn action1" onclick="checkAnswer(['1.23', '1.2'])">Check</button>
+			</div>
+			
+			<div class="dropdown" onclick="dropdown(this)">
+				<div class="toggle">Hint 1<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path d="M6 9L12 15L18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></g></svg></div>
+				<div class="content" id="hint1" hidden>
+					<p>Use a substitution where the new variable equals one plus the square root of x, noting that the differential produces the square root term in the denominator.</p>
+				</div>
+			</div>
+			<div class="dropdown" onclick="dropdown(this)">
+				<div class="toggle">Hint 2<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path d="M6 9L12 15L18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></g></svg></div>
+				<div class="content" id="hint2" hidden>
+					<p>After substitution, the integral becomes a simple power function which can be integrated using the power rule.</p>
+				</div>
+			</div>
+			<div class="dropdown" onclick="dropdown(this)">
+				<div class="toggle">Solution<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path d="M6 9L12 15L18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></g></svg></div>
+				<div class="content" id="solution" hidden>
+					
+				</div>
+			</div>
+		</div>
+	</dialog>
 
 	<script>
 		const timezone = 'Australia/Sydney';
@@ -167,7 +399,125 @@
 			);
 			return Math.floor((target - startDate) / (24 * 60 * 60 * 1000)) + 2;
 		}
+		console.log('Current Day:', getDate());
 
+		function fixInput(ele) {
+			ele.value = ele.value.replace(/[^0-9.-]/g, '');
+			ele.style.cssText = '';
+		}
+
+		function dropdown(ele) {
+			const content = ele.querySelector('.content');
+			content.hidden = !content.hidden;
+		}
+
+		function renderMath(latex, parent) {
+			parent.innerHTML = '';
+
+			const math = latex.trim().replaceAll('\n', ' \\\\ ');
+			const parts = math.split(' \\\\  \\\\ ');
+			parts.forEach(part => {
+				const div = document.createElement('div');
+				div.classList.add('math-block');
+				katex.render(part, div, {
+					throwOnError: false,
+					displayMode: true
+				});
+				parent.appendChild(div);
+			});
+		}
+
+		function arrayStrip(array, compare) {
+			let start = 0;
+			let end = array.length - 1;
+
+			while (start <= end && compare(array[start])) start++;
+			while (end >= start && compare(array[end])) end--;
+			return array.slice(start, end + 1);
+		}
+
+		function renderPart(parent, type, text) {
+			let lastChild = Array.from(parent.children).at(-1);
+			if (type === 'math') {
+				const math = document.createElement('div');
+				renderMath(text, math);
+				parent.appendChild(math);
+			} else if (type === 'newblock') {
+				const newBlock = document.createElement('p');
+				newBlock.textContent = text;
+				parent.appendChild(newBlock);
+			} else {
+				if (lastChild?.tagName !== 'P') {
+					const newP = document.createElement('p');
+					parent.appendChild(newP);
+					lastChild = newP;
+				}
+				if (type === 'newline') {
+					const newLine = document.createElement('br');
+					lastChild.appendChild(newLine);
+				} else if (type === 'bold') {
+					const newBold = document.createElement('b');
+					newBold.textContent = text;
+					lastChild.appendChild(newBold);
+				} else {
+					lastChild.innerHTML += text;
+				}
+			}
+		}
+		function renderMarkdown(md, parent) {
+			parent.innerHTML = '';
+
+			let parts = [];
+
+			let type = 'text';
+			let buffer = '';
+			for (const char of md) {
+				if (type === 'text' && char === '\n') {
+					if (buffer) parts.push([type, buffer]);
+					if (['newline', 'newblock'].includes(parts.at(-1)?.[0])) {
+						parts.pop();
+						parts.push(['newblock', null]);
+					} else {
+						parts.push(['newline', null]);
+						buffer = '';
+					}
+				} else if (type !== 'math' && char === '*' && buffer.at(-1) === '*') {
+					parts.push([type, buffer.slice(0, -1)]);
+					type = type === 'bold' ? 'text' : 'bold';
+					buffer = '';
+				} else if (char === '$') {
+					parts.push([type, buffer]);
+					type = type === 'math' ? 'text' : 'math';
+					buffer = '';
+				} else {
+					buffer += char;
+				}
+			}
+
+			parts = parts.filter(e => e[0] !== '' && e[1] !== '');
+			parts = arrayStrip(parts, e => ['newline', 'newblock'].includes(e[0]));
+
+			parts.map(([type, text]) => renderPart(parent, type, text));
+		}
+		
+		function checkAnswer(answers) {
+			const answerInput = document.getElementById('answer-input');
+			const answer = answerInput.value.trim();
+
+			answerInput.style.cssText = `border-color: ${answers.includes(answer) ? '#0f0' : '#f00'};`;
+		}
+
+		const solutionContent = document.getElementById('solution');
+		renderMarkdown(`**Step 1:** State the integral to evaluate\nWe are given a definite integral with a square root and a squared binomial.\n\n$\\displaystyle I=\\int_{1}^{4}\\frac{1}{\\sqrt{x}(1+\\sqrt{x})^{2}}\\,dx$\n\n**Step 2:** Set up the substitution\nLet u equal one plus the square root of x.\n\n$\\displaystyle u=1+\\sqrt{x}$\n\n**Step 3:** Compute the differential\nDifferentiate u with respect to x.\n\n$\\displaystyle du=\\frac{1}{2\\sqrt{x}}\\,dx$\n\n**Step 4:** Solve for the differential expression\nRearrange to express one over square root of x times dx in terms of du.\n\n$\\displaystyle \\frac{1}{\\sqrt{x}}\\,dx=2\\,du$\n\n**Step 5:** Transform the lower bound\nWhen x equals one, compute the corresponding value of u.\n\n$\\displaystyle x=1\\quad\\Rightarrow\\quad u=1+\\sqrt{1}=1+1=2$\n\n**Step 6:** Transform the upper bound\nWhen x equals four, compute the corresponding value of u.\n\n$\\displaystyle x=4\\quad\\Rightarrow\\quad u=1+\\sqrt{4}=1+2=3$\n\n**Step 7:** Rewrite the integral with substitution\nSubstitute u and the differential into the integral with new limits.\n\n$\\displaystyle I=\\int_{2}^{3}\\frac{1}{u^{2}}\\cdot 2\\,du$\n\n**Step 8:** Factor out the constant\nPull the constant factor of two outside the integral.\n\n$\\displaystyle I=2\\int_{2}^{3}\\frac{1}{u^{2}}\\,du$\n\n**Step 9:** Rewrite with negative exponent\nExpress one over u squared as u to the negative two.\n\n$\\displaystyle I=2\\int_{2}^{3}u^{-2}\\,du$\n\n**Step 10:** Apply the power rule\nIntegrate u to the negative two using the power rule.\n\n$\\displaystyle \\int u^{-2}\\,du=\\frac{u^{-1}}{-1}=-u^{-1}=-\\frac{1}{u}+C$\n\n**Step 11:** Write the antiderivative with bounds\nApply the fundamental theorem of calculus with the constant factor.\n\n$\\displaystyle I=2\\left[-\\frac{1}{u}\\right]_{2}^{3}$\n\n**Step 12:** Evaluate at the upper bound\nSubstitute u equals three.\n\n$\\displaystyle -\\frac{1}{3}$\n\n**Step 13:** Evaluate at the lower bound\nSubstitute u equals two.\n\n$\\displaystyle -\\frac{1}{2}$\n\n**Step 14:** Compute the definite integral\nSubtract and multiply by two.\n\n$\\displaystyle I=2\\left(-\\frac{1}{3}-\\left(-\\frac{1}{2}\\right)\\right)=2\\left(-\\frac{1}{3}+\\frac{1}{2}\\right)$\n\n**Step 15:** Find the common denominator\nCompute the difference inside the parentheses.\n\n$\\displaystyle -\\frac{1}{3}+\\frac{1}{2}=\\frac{-2+3}{6}=\\frac{1}{6}$\n\n**Step 16:** Complete the calculation\nMultiply two by one-sixth.\n\n$\\displaystyle I=2\\cdot\\frac{1}{6}=\\frac{2}{6}=\\frac{1}{3}$\n\n**Step 17:** Write the exact answer\nThe definite integral equals one-third.\n\n$\\displaystyle I=\\frac{1}{3}$\n\n**Step 18:** Provide numerical approximation\nWe compute the decimal approximation rounded to two decimal places.\n\n$\\displaystyle I\\approx 0.33$`, solutionContent);
+
+		const puzzle = document.getElementById('puzzle');
+		renderMath(
+			`\\int_{\\sin(\\cos 1)}^{\\sin(1)} \\frac{1}{\\sqrt{1-x^{2}}\\sqrt{1-\\arcsin^{2}x}\\sqrt{1-\\arccos^{2}(\\arcsin x)}}\\,dx`,
+			puzzle
+		);
+
+		const questionModal = document.getElementById('question-modal');
+		questionModal.showModal();
 	</script>
 </body>
 </html>
