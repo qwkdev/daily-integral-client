@@ -1,11 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>[name]</title>
+	<style>
+		:root {
+			--u: 1.4vh;
+
+			--bg: #161618;
+			--bg2: #2a2a2b;
+			--bg3: #444445;
+
+			--grid: round(calc(2 * var(--u)), 10px);
+		}
+
+		.btn {
+			--btn-h: var(--h);
+			--btn-s: var(--s);
+			--btn-l: var(--l);
+			--br: calc(.5 * var(--u));
+			--border: calc(.15 * var(--u));
+
+			box-sizing: border-box;
+			font-family: monospace;
+			font-size: calc(2 * var(--u));
+			color: #fff;
+
+			background: hsl(var(--btn-h), calc(83% * var(--btn-s)), calc(57% * var(--btn-l)));
+			border: var(--border) solid hsl(var(--btn-h), calc(70% * var(--btn-s)), calc(48% * var(--btn-l)));
+			border-radius: var(--br);
+			box-shadow:
+				0 calc(var(--border)/2) calc(var(--border)/2) var(--border) hsla(var(--btn-h), calc(72% * var(--btn-s)), calc(30% * var(--btn-l)), 0.2),
+				inset 0 calc(-1 * var(--border)) var(--border) 0 hsl(var(--btn-h), calc(70% * var(--btn-s)), calc(48% * var(--btn-l))),
+				inset 0 0 0 var(--border) hsl(var(--btn-h), calc(92% * var(--btn-s)), calc(62% * var(--btn-l)));
+
+			transition: .2s;
+		}
+		.btn:hover {
+			--btn-l: calc(var(--l) * 1.05);
+		}
+		.btn:focus {
+			outline: none;
+		}
+		.btn::selection {
+			background: var(--c);
+		}
+
+		body {
+			margin: 0;
+			background: var(--bg);
+			background-image: linear-gradient(0deg, var(--bg2) 0, var(--bg2) 1px, transparent 1px, transparent 100%),
+						linear-gradient(90deg, var(--bg2) 0, var(--bg2) 1px, transparent 1px, transparent 100%);
+			background-size: var(--grid) var(--grid);
+		}
+
+		#grid {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			box-sizing: border-box;
+
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+
+			padding: round(calc(3 * var(--u)), 10px);
+			gap: calc(1 * var(--u));
+		}
+		.panel {
+			width: 100%;
+			height: 100%;
+			background: var(--bg);
+			border: 1px solid var(--bg2);
+			padding: calc(1 * var(--u));
+			box-sizing: border-box;
+			font-family: monospace;
+			color: #fff;
+			position: relative;
+		}
+		.panel h1, .panel h2, .panel h3, .panel p {
+			margin: 0;
+		}
+		.panel h1 {
+			font-size: calc(3 * var(--u));
+			font-weight: 700;
+		}
+		.panel h2 {
+			font-size: calc(1.5 * var(--u));
+			font-weight: 700;
+		}
+		.panel h3, .panel p {
+			font-size: calc(1.2 * var(--u));
+			font-weight: 500;
+		}
+		.panel .center {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		.topic {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: calc(.5 * var(--u));
+
+			.btn {
+				width: 100%;
+				font-size: calc(2 * var(--u));
+				padding: calc(.8 * var(--u)) 0;
+			}
+		}
+
+		.clr1 {
+			--h: 220;
+			--s: 1;
+			--l: 1;
+		}
+		.clr2 {
+			--h: 120;
+			--s: .8;
+			--l: .75;
+		}
+		.clr3 {
+			--h: 35;
+			--s: 1;
+			--l: 1;
+		}
+		.clr4 {
+			--h: 0;
+			--s: .8;
+			--l: .6;
+		}
+
+		@media only screen and (max-aspect-ratio: 1/1) {
+			:root {
+				--u: 2vw;
+			}
+		}
+	</style>
 </head>
 <body>
+	<div id="grid">
+		<div class="panel" id="title">
+			<h2>[name] &bullet; v0</h2>
+		</div>
+		<div class="panel" id="day-select">
+			<h2>Day: 123</h2>
+		</div>
+		<div class="panel topic">
+			<h1>Example</h1>
+			<div class="logo" id="ilogo">&int;</div>
+			<button class="btn clr1">Beginner</button>
+			<button class="btn clr2">Easy</button>
+			<button class="btn clr3">Medium</button>
+			<button class="btn clr4">Hard</button>
+		</div>
+	</div>
+
 	<script>
 		const timezone = 'Australia/Sydney';
 		const startDate = new Date(new Date("2025-09-16").toLocaleString("en-US", { timeZone: timezone }));
