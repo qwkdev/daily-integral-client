@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>ddx.today</title>
 	<style>
 		:root {
@@ -12,7 +14,8 @@
 			--bg3: #444445;
 			--bg4: #777779;
 
-			--grid: round(calc(2 * var(--u)), 10px);
+			--px: 1px;
+			--grid: round(calc(2 * var(--u)), calc(10 * var(--px)));
 		}
 		*::selection {
 			background: #fff7;
@@ -53,8 +56,8 @@
 		body {
 			margin: 0;
 			background: var(--bg);
-			background-image: linear-gradient(0deg, var(--bg2) 0, var(--bg2) 1px, transparent 1px, transparent 100%),
-						linear-gradient(90deg, var(--bg2) 0, var(--bg2) 1px, transparent 1px, transparent 100%);
+			background-image: linear-gradient(0deg, var(--bg2) 0, var(--bg2) var(--px), transparent var(--px), transparent 100%),
+						linear-gradient(90deg, var(--bg2) 0, var(--bg2) var(--px), transparent var(--px), transparent 100%);
 			background-size: var(--grid) var(--grid);
 		}
 
@@ -68,14 +71,14 @@
 			display: grid;
 			grid-template-columns: 1fr 1fr;
 
-			padding: round(calc(3 * var(--u)), 10px);
+			padding: round(calc(3 * var(--u)), calc(10 * var(--px)));
 			gap: calc(1 * var(--u));
 		}
 		.panel {
 			width: 100%;
 			height: 100%;
 			background: var(--bg);
-			border: 1px solid var(--bg2);
+			border: var(--px) solid var(--bg2);
 			padding: calc(1 * var(--u));
 			box-sizing: border-box;
 			font-family: monospace;
@@ -112,7 +115,7 @@
 			box-sizing: border-box;
 			padding: calc(.5 * var(--u));
 			background: var(--bg2);
-			border: 1px solid var(--bg3);
+			border: var(--px) solid var(--bg3);
 			font-family: monospace;
 			font-size: calc(1.5 * var(--u));
 			color: #fff;
@@ -184,48 +187,6 @@
 			--l: .5;
 		}
 
-		.dropdown {
-			width: 100%;
-			height: max-content;
-			box-sizing: border-box;
-			border: 1px solid var(--bg2);
-			font-family: monospace;
-			color: #fff;
-			position: relative;
-			padding: calc(1 * var(--u));
-		}
-		.dropdown .toggle {
-			position: relative;
-			font-size: calc(2 * var(--u));
-		}
-		.dropdown .toggle svg {
-			height: 80%;
-			width: auto;
-			position: absolute;
-			top: 10%;
-			right: 1%;
-			transition: .2s;
-			stroke: #fff;
-		}
-		.dropdown .toggle:has(+ .content[hidden]) svg {
-			top: 9%;
-			right: .5%;
-			transform: rotate(-90deg);
-		}
-		.dropdown .content {
-			margin-top: calc(1 * var(--u));
-		}
-		.dropdown .content p {
-			margin: 0;
-			font-size: calc(1 * var(--u)) !important;
-		}
-		.dropdown .content b {
-			font-weight: 700;
-		}
-		.dropdown .content .math-block {
-			font-size: calc(1.5 * var(--u)) !important;
-		}
-
 		#title, #day-select {
 			display: flex;
 			align-items: center;
@@ -278,7 +239,7 @@
 			overflow-y: scroll;
 			box-sizing: border-box;
 			background: var(--bg);
-			border: 1px solid var(--bg2);
+			border: var(--px) solid var(--bg2);
 			padding: calc(1 * var(--u));
 			font-family: monospace;
 			color: #fff;
@@ -311,7 +272,7 @@
 			height: max-content;
 			flex: 0 0 auto;
 			box-sizing: border-box;
-			border: 1px solid var(--bg2);
+			border: var(--px) solid var(--bg2);
 			padding: calc(1 * var(--u));
 			padding-bottom: calc(.9 * var(--u));
 			font-family: monospace;
@@ -339,6 +300,51 @@
 			height: max-content;
 			overflow-y: scroll;
 		}
+
+		.dropdown {
+			width: 100%;
+			height: max-content;
+			box-sizing: border-box;
+			border: var(--px) solid var(--bg2);
+			font-family: monospace;
+			color: #fff;
+			position: relative;
+			padding: calc(1 * var(--u));
+		}
+		.dropdown .toggle {
+			position: relative;
+			font-size: calc(2 * var(--u));
+		}
+		.dropdown .toggle svg {
+			height: 80%;
+			width: auto;
+			position: absolute;
+			top: 10%;
+			right: 1%;
+			transition: .2s;
+			stroke: #fff;
+		}
+		.dropdown .toggle:has(+ .content[hidden]) svg {
+			top: 9%;
+			right: .5%;
+			transform: rotate(-90deg);
+		}
+		.dropdown .content {
+			margin-top: calc(1 * var(--u));
+			-moz-text-size-adjust: 100%;
+			text-size-adjust: 100%;
+		}
+		.dropdown .content p {
+			margin: 0;
+			font-size: calc(1.25 * var(--u));
+		}
+		.dropdown .content b {
+			font-weight: 700;
+		}
+		.dropdown .content .math-block {
+			font-size: calc(1.5 * var(--u));
+		}
+
 		@media only screen and (min-aspect-ratio: 1/1) {
 			:root {
 				--u: 1.4vh;
@@ -362,10 +368,10 @@
 				font-size: calc(1.75 * var(--u));
 			}
 			.dropdown .content p {
-				font-size: calc(1.5 * var(--u)) !important;
+				font-size: calc(1.5 * var(--u));
 			}
 			.dropdown .content .math-block {
-				font-size: calc(1.75 * var(--u)) !important;
+				font-size: calc(1.75 * var(--u));
 			}
 		}
 		@media only screen and (max-aspect-ratio: 2/3) {
@@ -382,6 +388,8 @@
 				font-size: calc(2 * var(--u));
 			}
 		}
+
+		@media (min-resolution: 2dppx) { :root { --px: .5px; } }
 	</style>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
@@ -389,7 +397,7 @@
 <body>
 	<div id="grid">
 		<div class="panel" id="title">
-			<h1>ddx.today &bullet; v1.2.1</h1>
+			<h1>ddx.today &bullet; v1.2</h1>
 		</div>
 		<div class="panel" id="day-select">
 			<h1>Day:</h1>
