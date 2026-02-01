@@ -400,6 +400,9 @@
 			#title, #day-select {
 				grid-column: span 1;
 			}
+			dialog .modal #puzzle {
+				font-size: calc(1.75 * var(--u));
+			}
 		}
 	</style>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -656,6 +659,8 @@
 			renderMarkdown(info.solution, solutionContent);
 
 			questionModal.showModal();
+			questionModal.focus();
+			setTimeout(() => questionModal.focus(), 50);
 		}
 
 		fetch(`${SERVER}/${day}`)
