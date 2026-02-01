@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>[name]</title>
+	<title>ddx.today</title>
 	<style>
 		:root {
 			--u: 2vw;
@@ -18,7 +18,7 @@
 			background: #fff7;
 		}
 		*[hidden] {
-			display: none;
+			display: none !important;
 		}
 
 		.btn {
@@ -243,7 +243,7 @@
 			gap: calc(.75 * var(--u));
 
 			p {
-				font-size: calc(1.75  * var(--u));
+				font-size: calc(1.5  * var(--u));
 			}
 			.btn {
 				--h: 0;
@@ -259,7 +259,7 @@
 				height: calc(2.5 * var(--u));
 			}
 			.minus {
-				padding-bottom: calc(.25* var(--u));
+				padding-bottom: calc(.3 * var(--u));
 			}
 		}
 
@@ -301,7 +301,7 @@
 					margin: 0;
 
 					display: flex;
-					gap: calc(.5 * var(--u));
+					gap: calc(1 * var(--u));
 					align-items: center;
 
 					span {
@@ -367,7 +367,7 @@
 			#day-select {
 				grid-column: 4 / 7;
 			}
-			.topic {
+			.topic, #loading {
 				grid-column: span 2;
 			}
 			dialog .modal {
@@ -388,67 +388,73 @@
 <body>
 	<div id="grid">
 		<div class="panel" id="title">
-			<h2>[name] &bullet; v0</h2>
+			<h2>ddx.today &bullet; v1.0</h2>
 		</div>
 		<div class="panel" id="day-select">
 			<h2>Day:</h2>
 			<div class="num">
-				<button class="btn minus" onclick="changeDay(-1)">-</button>
-				<p>123</p>
-				<button class="btn" onclick="changeDay(1)">+</button>
+				<!-- <button class="btn minus" onclick="changeDay(-1)">-</button> -->
+				<p id="day"></p>
+				<!-- <button class="btn" onclick="changeDay(1)">+</button> -->
 			</div>
 		</div>
-		<div class="panel topic">
-			<h1>Example</h1>
+
+		<div class="panel" id="loading">
+			<h2>Loading...</h2>
+		</div>
+
+		<div class="panel topic" id="integral" hidden>
+			<h1>Integration</h1>
 			<!-- <div class="logo" id="ilogo">&int;</div> -->
-			<button class="btn clr1">Beginner</button>
-			<button class="btn clr2">Easy</button>
-			<button class="btn clr3">Medium</button>
-			<button class="btn clr4">Hard</button>
+			<button class="btn clr1" onclick="loadPuzzle(this)" data-value="beginner">Beginner</button>
+			<button class="btn clr2" onclick="loadPuzzle(this)" data-value="easy">Easy</button>
+			<button class="btn clr3" onclick="loadPuzzle(this)" data-value="medium">Medium</button>
+			<button class="btn clr4" onclick="loadPuzzle(this)" data-value="hard">Hard</button>
 		</div>
-		<div class="panel topic">
-			<h1>Example</h1>
-			<button class="btn clr2">Easy</button>
-			<button class="btn clr3">Medium</button>
-			<button class="btn clr4">Hard</button>
+		<div class="panel topic" id="derivative" hidden>
+			<h1>Derivatives</h1>
+			<button class="btn clr2" onclick="loadPuzzle(this)" data-value="easy">Easy</button>
+			<button class="btn clr3" onclick="loadPuzzle(this)" data-value="medium">Medium</button>
+			<button class="btn clr4" onclick="loadPuzzle(this)" data-value="hard">Hard</button>
 		</div>
-		<div class="panel topic">
-			<h1>Example</h1>
-			<button class="btn clr1">Limit</button>
+		<div class="panel topic" id="limit" hidden>
+			<h1>Limits</h1>
+			<button class="btn clr1" onclick="loadPuzzle(this)" data-value="limit">Limit</button>
 		</div>
 	</div>
 
 	<dialog id="question-modal">
 		<div class="modal">
-			<h1><span class="btn clr2">Easy</span>Integral</h1>
+			<h1 id="puzzleHeader"></h1>
+
 			<div id="puzzle"></div>
 			<div id="check">
 				<input id="answer-input" type="text" inputmode="decimal" placeholder="Type answer here..." oninput="fixInput(this)">
-				<button class="btn action1" onclick="checkAnswer(['1.23', '1.2'])">Check</button>
+				<button id="answer-check" class="btn action1">Check</button>
 			</div>
 			
 			<div class="dropdown" onclick="dropdown(this)">
 				<div class="toggle">Hint 1<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path d="M6 9L12 15L18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></g></svg></div>
-				<div class="content" id="hint1" hidden>
-					<p>Use a substitution where the new variable equals one plus the square root of x, noting that the differential produces the square root term in the denominator.</p>
+				<div class="content" hidden>
+					<p id="hint1"></p>
 				</div>
 			</div>
 			<div class="dropdown" onclick="dropdown(this)">
 				<div class="toggle">Hint 2<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path d="M6 9L12 15L18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></g></svg></div>
-				<div class="content" id="hint2" hidden>
-					<p>After substitution, the integral becomes a simple power function which can be integrated using the power rule.</p>
+				<div class="content" hidden>
+					<p id="hint2"></p>
 				</div>
 			</div>
 			<div class="dropdown" onclick="dropdown(this)">
 				<div class="toggle">Solution<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path d="M6 9L12 15L18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></g></svg></div>
-				<div class="content" id="solution" hidden>
-					
-				</div>
+				<div class="content" id="solution" hidden></div>
 			</div>
 		</div>
 	</dialog>
 
 	<script>
+		const SERVER = 'https://di-cache.bbboxcode.workers.dev';
+
 		const timezone = 'Australia/Sydney';
 		const startDate = new Date(new Date("2025-09-16").toLocaleString("en-US", { timeZone: timezone }));
 		function getDate(isoDate) {
@@ -457,7 +463,14 @@
 			);
 			return Math.floor((target - startDate) / (24 * 60 * 60 * 1000)) + 2;
 		}
-		console.log('Current Day:', getDate());
+
+		let day = getDate();
+		document.getElementById('day').innerText = day;
+
+		function titleCase(text) {
+			if (!text) return '';
+			return text[0].toUpperCase() + text.toLowerCase().slice(1);
+		}
 
 		function fixInput(ele) {
 			ele.value = ele.value.replace(/[^0-9.-]/g, '');
@@ -565,17 +578,68 @@
 			answerInput.style.cssText = `border-color: ${answers.includes(answer) ? '#0f0' : '#f00'};`;
 		}
 
-		const solutionContent = document.getElementById('solution');
-		renderMarkdown(`**Step 1:** State the integral to evaluate\nWe are given a definite integral with a square root and a squared binomial.\n\n$\\displaystyle I=\\int_{1}^{4}\\frac{1}{\\sqrt{x}(1+\\sqrt{x})^{2}}\\,dx$\n\n**Step 2:** Set up the substitution\nLet u equal one plus the square root of x.\n\n$\\displaystyle u=1+\\sqrt{x}$\n\n**Step 3:** Compute the differential\nDifferentiate u with respect to x.\n\n$\\displaystyle du=\\frac{1}{2\\sqrt{x}}\\,dx$\n\n**Step 4:** Solve for the differential expression\nRearrange to express one over square root of x times dx in terms of du.\n\n$\\displaystyle \\frac{1}{\\sqrt{x}}\\,dx=2\\,du$\n\n**Step 5:** Transform the lower bound\nWhen x equals one, compute the corresponding value of u.\n\n$\\displaystyle x=1\\quad\\Rightarrow\\quad u=1+\\sqrt{1}=1+1=2$\n\n**Step 6:** Transform the upper bound\nWhen x equals four, compute the corresponding value of u.\n\n$\\displaystyle x=4\\quad\\Rightarrow\\quad u=1+\\sqrt{4}=1+2=3$\n\n**Step 7:** Rewrite the integral with substitution\nSubstitute u and the differential into the integral with new limits.\n\n$\\displaystyle I=\\int_{2}^{3}\\frac{1}{u^{2}}\\cdot 2\\,du$\n\n**Step 8:** Factor out the constant\nPull the constant factor of two outside the integral.\n\n$\\displaystyle I=2\\int_{2}^{3}\\frac{1}{u^{2}}\\,du$\n\n**Step 9:** Rewrite with negative exponent\nExpress one over u squared as u to the negative two.\n\n$\\displaystyle I=2\\int_{2}^{3}u^{-2}\\,du$\n\n**Step 10:** Apply the power rule\nIntegrate u to the negative two using the power rule.\n\n$\\displaystyle \\int u^{-2}\\,du=\\frac{u^{-1}}{-1}=-u^{-1}=-\\frac{1}{u}+C$\n\n**Step 11:** Write the antiderivative with bounds\nApply the fundamental theorem of calculus with the constant factor.\n\n$\\displaystyle I=2\\left[-\\frac{1}{u}\\right]_{2}^{3}$\n\n**Step 12:** Evaluate at the upper bound\nSubstitute u equals three.\n\n$\\displaystyle -\\frac{1}{3}$\n\n**Step 13:** Evaluate at the lower bound\nSubstitute u equals two.\n\n$\\displaystyle -\\frac{1}{2}$\n\n**Step 14:** Compute the definite integral\nSubtract and multiply by two.\n\n$\\displaystyle I=2\\left(-\\frac{1}{3}-\\left(-\\frac{1}{2}\\right)\\right)=2\\left(-\\frac{1}{3}+\\frac{1}{2}\\right)$\n\n**Step 15:** Find the common denominator\nCompute the difference inside the parentheses.\n\n$\\displaystyle -\\frac{1}{3}+\\frac{1}{2}=\\frac{-2+3}{6}=\\frac{1}{6}$\n\n**Step 16:** Complete the calculation\nMultiply two by one-sixth.\n\n$\\displaystyle I=2\\cdot\\frac{1}{6}=\\frac{2}{6}=\\frac{1}{3}$\n\n**Step 17:** Write the exact answer\nThe definite integral equals one-third.\n\n$\\displaystyle I=\\frac{1}{3}$\n\n**Step 18:** Provide numerical approximation\nWe compute the decimal approximation rounded to two decimal places.\n\n$\\displaystyle I\\approx 0.33$`, solutionContent);
+		let apiData = {}
 
-		const puzzle = document.getElementById('puzzle');
-		renderMath(
-			`\\int_{\\sin(\\cos 1)}^{\\sin(1)} \\frac{1}{\\sqrt{1-x^{2}}\\sqrt{1-\\arcsin^{2}x}\\sqrt{1-\\arccos^{2}(\\arcsin x)}}\\,dx`,
-			puzzle
-		);
+		const grid = document.getElementById('grid');
+		function init(data) {
+			apiData = data;
+			document.getElementById('loading').hidden = true;
+			grid.querySelectorAll('.topic').forEach(t => {
+				t.querySelectorAll('.btn').forEach(l => {
+					const info = data[t.id][l.dataset.value];
+					if (!info) l.remove();
+				})
+
+				t.hidden = false;
+			});
+		}
 
 		const questionModal = document.getElementById('question-modal');
-		// questionModal.showModal();
+		questionModal.addEventListener('click', e => {
+			if (e.target === questionModal) questionModal.close();
+		});
+
+		const puzzle = document.getElementById('puzzle');
+		const hint1 = document.getElementById('hint1');
+		const hint2 = document.getElementById('hint2');
+		const solutionContent = document.getElementById('solution');
+		const puzzleHeader = document.getElementById('puzzleHeader');
+		function loadPuzzle(ele) {
+			const level = ele.dataset.value;
+			const prettyLevel = ele.textContent;
+			const clr = Array.from(ele.classList).filter(e => e.startsWith('clr'))[0];
+			const type = ele.parentElement.id;
+			const info = apiData[type][level];
+
+			puzzleHeader.innerHTML = '';
+			const levelSpan = document.createElement('span');
+			levelSpan.classList.add('btn', clr);
+			levelSpan.textContent = prettyLevel;
+			puzzleHeader.appendChild(levelSpan);
+			puzzleHeader.appendChild(document.createTextNode(titleCase(type)));
+
+			renderMath(info.latex, puzzle);
+
+			document.getElementById('answer-input').value = '';
+			document.getElementById('answer-input').style.cssText = '';
+			document.getElementById('answer-check').onclick = () => checkAnswer(info.answers);
+
+			hint1.parentElement.hidden = true;
+			hint2.parentElement.hidden = true;
+			solutionContent.hidden = true;
+
+			hint1.innerText = info.hints?.[0] ?? '';
+			hint2.innerText = info.hints?.[1] ?? '';
+
+			renderMarkdown(info.solution, solutionContent);
+
+			questionModal.showModal();
+		}
+
+		fetch(`${SERVER}/${day}`)
+			.then(resp => resp.json())
+			.then(init)
+			.catch(e => console.error('Error:', e));
 	</script>
 </body>
 </html>
