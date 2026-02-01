@@ -109,24 +109,21 @@
 
 		input {
 			width: 100%;
-
 			box-sizing: border-box;
 			padding: calc(.5 * var(--u));
 			background: var(--bg2);
 			border: 1px solid var(--bg3);
-
 			font-family: monospace;
 			font-size: calc(1.5 * var(--u));
 			color: #fff;
 			transition: .3s;
-
-			&:focus {
-				outline: none;
-				border-color: var(--bg4);
-			}
-			&::placeholder {
-				color: var(--bg4);
-			}
+		}
+		input:focus {
+			outline: none;
+			border-color: var(--bg4);
+		}
+		input::placeholder {
+			color: var(--bg4);
 		}
 
 		input::-webkit-outer-spin-button,
@@ -139,18 +136,16 @@
 			appearance: textfield;
 		}
 
-
 		.topic {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
 			gap: calc(.5 * var(--u));
-
-			.btn {
-				width: 100%;
-				font-size: calc(2 * var(--u));
-				padding: calc(.8 * var(--u)) 0;
-			}
+		}
+		.topic .btn {
+			width: 100%;
+			font-size: calc(2 * var(--u));
+			padding: calc(.8 * var(--u)) 0;
 		}
 
 		.clr1 {
@@ -173,7 +168,6 @@
 			--s: .8;
 			--l: .6;
 		}
-
 		.action {
 			--h: 250;
 			--s: 1;
@@ -193,44 +187,44 @@
 		.dropdown {
 			width: 100%;
 			height: max-content;
-
 			box-sizing: border-box;
 			border: 1px solid var(--bg2);
 			font-family: monospace;
 			color: #fff;
 			position: relative;
 			padding: calc(1 * var(--u));
-
-			.toggle {
-				position: relative;
-				font-size: calc(2 * var(--u));
-				
-				svg {
-					height: 80%;
-					width: auto;
-					position: absolute;
-					top: 10%;
-					right: 1%;
-					transition: .2s;
-					stroke: #fff;
-				}
-				&:has(+ .content[hidden]) svg {
-					top: 9%;
-					right: .5%;
-					transform: rotate(-90deg);
-				}
-			}
-			.content {
-				margin-top: calc(1 * var(--u));
-				font-size: calc(1 * var(--u));
-
-				p {
-					margin: 0;
-				}
-				b {
-					font-weight: 700;
-				}
-			}
+		}
+		.dropdown .toggle {
+			position: relative;
+			font-size: calc(2 * var(--u));
+		}
+		.dropdown .toggle svg {
+			height: 80%;
+			width: auto;
+			position: absolute;
+			top: 10%;
+			right: 1%;
+			transition: .2s;
+			stroke: #fff;
+		}
+		.dropdown .toggle:has(+ .content[hidden]) svg {
+			top: 9%;
+			right: .5%;
+			transform: rotate(-90deg);
+		}
+		.dropdown .content {
+			margin-top: calc(1 * var(--u));
+			font-size: calc(1 * var(--u));
+		}
+		.dropdown .content p {
+			margin: 0;
+			font-size: calc(1 * var(--u));
+		}
+		.dropdown .content b {
+			font-weight: 700;
+		}
+		.dropdown .content .math-block {
+			font-size: calc(1.5 * var(--u));
 		}
 
 		#title, #day-select {
@@ -239,31 +233,31 @@
 			gap: calc(1 * var(--u));
 			grid-column: span 2;
 		}
+
 		.num {
 			display: flex;
 			align-items: center;
 			height: 100%;
 			gap: calc(.75 * var(--u));
-
-			p {
-				font-size: calc(3 * var(--u));
-			}
-			.btn {
-				--h: 0;
-				--s: 0;
-				--l: .6;
-			}
-			button {
-				padding: 0;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				width: calc(2.5 * var(--u));
-				height: calc(2.5 * var(--u));
-			}
-			.minus {
-				padding-bottom: calc(.3 * var(--u));
-			}
+		}
+		.num p {
+			font-size: calc(3 * var(--u));
+		}
+		.num .btn {
+			--h: 0;
+			--s: 0;
+			--l: .6;
+		}
+		.num button {
+			padding: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: calc(2.5 * var(--u));
+			height: calc(2.5 * var(--u));
+		}
+		.num .minus {
+			padding-bottom: calc(.3 * var(--u));
 		}
 
 		dialog {
@@ -273,97 +267,79 @@
 			width: 100vw;
 			height: 100vh;
 			background: var(--modal-bg);
-
-			.modal {
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-
-				width: calc(40 * var(--u));
-				height: max-content;
-				max-height: 80vh;
-				overflow-y: scroll;
-
-				box-sizing: border-box;
-				background: var(--bg);
-				border: 1px solid var(--bg2);
-				padding: calc(1 * var(--u));
-				font-family: monospace;
-				color: #fff;
-				position: relative;
-
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				gap: calc(1 * var(--u));
-
-				h1 {
-					font-size: calc(2 * var(--u));
-					font-weight: 700;
-					margin: 0;
-
-					display: flex;
-					gap: calc(1 * var(--u));
-					align-items: center;
-
-					span {
-						font-size: calc(1.5 * var(--u));
-						padding: calc(.2 * var(--u)) calc(.5 * var(--u)) calc(.3 * var(--u)) calc(.5 * var(--u));
-					}
-				}
-				h2 {
-					font-size: calc(1.25 * var(--u));
-					font-weight: 500;
-					margin: 0;
-					text-align: center;
-				}
-
-				#puzzle {
-					width: 100%;
-					height: max-content;
-					flex: 0 0 auto;
-
-					box-sizing: border-box;
-					border: 1px solid var(--bg2);
-					padding: calc(1 * var(--u));
-					padding-bottom: calc(.9 * var(--u));
-					font-family: monospace;
-					color: #fff;
-					position: relative;
-
-					overflow-x: scroll;
-					font-size: calc(1.2 * var(--u));
-
-					display: flex;
-					justify-content: center;
-					flex-direction: column;
-
-					.math-block {
-						height: max-content !important;
-					}
-				}
-
-				#check {
-					width: 100%;
-					display: flex;
-					gap: calc(.5 * var(--u));
-
-					button {
-						font-size: calc(1.5 * var(--u));
-						padding: calc(.2 * var(--u)) calc(.5 * var(--u)) calc(.3 * var(--u)) calc(.5 * var(--u));
-					}
-				}
-
-				.dropdown .content {
-					height: max-content;
-					/* max-height: 20vh; */
-					overflow-y: scroll;
-					font-size: calc(1 * var(--u));
-				}
-			}
 		}
-
+		dialog .modal {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: calc(40 * var(--u));
+			height: max-content;
+			max-height: 80vh;
+			overflow-y: scroll;
+			box-sizing: border-box;
+			background: var(--bg);
+			border: 1px solid var(--bg2);
+			padding: calc(1 * var(--u));
+			font-family: monospace;
+			color: #fff;
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: calc(1 * var(--u));
+		}
+		dialog .modal h1 {
+			font-size: calc(2 * var(--u));
+			font-weight: 700;
+			margin: 0;
+			display: flex;
+			gap: calc(1 * var(--u));
+			align-items: center;
+		}
+		dialog .modal h1 span {
+			font-size: calc(1.5 * var(--u));
+			padding: calc(.2 * var(--u)) calc(.5 * var(--u)) calc(.3 * var(--u)) calc(.5 * var(--u));
+		}
+		dialog .modal h2 {
+			font-size: calc(1.25 * var(--u));
+			font-weight: 500;
+			margin: 0;
+			text-align: center;
+		}
+		dialog .modal #puzzle {
+			width: 100%;
+			height: max-content;
+			flex: 0 0 auto;
+			box-sizing: border-box;
+			border: 1px solid var(--bg2);
+			padding: calc(1 * var(--u));
+			padding-bottom: calc(.9 * var(--u));
+			font-family: monospace;
+			color: #fff;
+			position: relative;
+			overflow-x: scroll;
+			font-size: calc(1.2 * var(--u));
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+		}
+		dialog .modal #puzzle .math-block {
+			height: max-content !important;
+		}
+		dialog .modal #check {
+			width: 100%;
+			display: flex;
+			gap: calc(.5 * var(--u));
+		}
+		dialog .modal #check button {
+			font-size: calc(1.5 * var(--u));
+			padding: calc(.2 * var(--u)) calc(.5 * var(--u)) calc(.3 * var(--u)) calc(.5 * var(--u));
+		}
+		dialog .modal .dropdown .content {
+			height: max-content;
+			overflow-y: scroll;
+		}
 		@media only screen and (min-aspect-ratio: 1/1) {
 			:root {
 				--u: 1.4vh;
@@ -382,13 +358,18 @@
 			}
 			dialog .modal {
 				width: calc(70 * var(--u));
-
-				#puzzle {
-					font-size: calc(1.75 * var(--u));
-				}
+			}
+			dialog .modal #puzzle {
+				font-size: calc(1.75 * var(--u));
 			}
 			.dropdown .content {
 				font-size: calc(1.5 * var(--u));
+			}
+			.dropdown .content p {
+				font-size: calc(1.5 * var(--u));
+			}
+			.dropdown .content .math-block {
+				font-size: calc(1.75 * var(--u));
 			}
 		}
 		@media only screen and (max-aspect-ratio: 2/3) {
@@ -479,13 +460,12 @@
 	<script>
 		const SERVER = 'https://api.ddx.today';
 
-		const timezone = 'Australia/Sydney';
-		const startDate = new Date(new Date("2025-09-16").toLocaleString("en-US", { timeZone: timezone }));
+		const startDate = new Date(Date.UTC(2025, 8, 15, 0, 0, 0));
 		function getDate(isoDate) {
 			const target = new Date(
-				new Date(...(isoDate ? [isoDate] : [])).toLocaleString("en-US", { timeZone: timezone })
+				new Date(...(isoDate ? [isoDate] : [])).toLocaleString('en-US', { timeZone: 'Australia/Sydney' })
 			);
-			return Math.floor((target - startDate) / (24 * 60 * 60 * 1000)) + 2;
+			return Math.floor((target - startDate) / (24 * 60 * 60 * 1000));
 		}
 
 		let day = getDate();
