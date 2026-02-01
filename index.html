@@ -4,7 +4,7 @@
 	<title>[name]</title>
 	<style>
 		:root {
-			--u: 1.4vh;
+			--u: 2vw;
 
 			--modal-bg: #06060888;
 			--bg: #161618;
@@ -201,7 +201,6 @@
 
 			.toggle {
 				position: relative;
-				/* padding: calc(1 * var(--u)); */
 				font-size: calc(2 * var(--u));
 				
 				svg {
@@ -221,14 +220,46 @@
 			}
 			.content {
 				margin-top: calc(1 * var(--u));
+				font-size: calc(1 * var(--u));
 
 				p {
 					margin: 0;
-					font-size: calc(1 * var(--u));
 				}
 				b {
 					font-weight: 700;
 				}
+			}
+		}
+
+		#title, #day-select {
+			display: flex;
+			align-items: center;
+			gap: calc(1 * var(--u));
+		}
+		.num {
+			display: flex;
+			align-items: center;
+			height: 100%;
+			gap: calc(.75 * var(--u));
+
+			p {
+				font-size: calc(1.75  * var(--u));
+			}
+			.btn {
+				--h: 0;
+				--s: 0;
+				--l: .6;
+			}
+			button {
+				padding: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: calc(2.5 * var(--u));
+				height: calc(2.5 * var(--u));
+			}
+			.minus {
+				padding-bottom: calc(.25* var(--u));
 			}
 		}
 
@@ -293,7 +324,7 @@
 					position: relative;
 
 					overflow-x: scroll;
-					font-size: calc(1 * var(--u));
+					font-size: calc(1.2 * var(--u));
 
 					display: flex;
 					justify-content: center;
@@ -323,9 +354,31 @@
 			}
 		}
 
-		@media only screen and (max-aspect-ratio: 1/1) {
+		@media only screen and (min-aspect-ratio: 1/1) {
 			:root {
-				--u: 2vw;
+				--u: 1.4vh;
+			}
+			#grid {
+				grid-template-columns: repeat(6, 1fr);
+			}
+			#title {
+				grid-column: 1 / 4;
+			}
+			#day-select {
+				grid-column: 4 / 7;
+			}
+			.topic {
+				grid-column: span 2;
+			}
+			dialog .modal {
+				width: calc(70 * var(--u));
+
+				#puzzle {
+					font-size: calc(1.75 * var(--u));
+				}
+			}
+			.dropdown .content {
+				font-size: calc(1.5 * var(--u));
 			}
 		}
 	</style>
@@ -338,7 +391,12 @@
 			<h2>[name] &bullet; v0</h2>
 		</div>
 		<div class="panel" id="day-select">
-			<h2>Day: 123</h2>
+			<h2>Day:</h2>
+			<div class="num">
+				<button class="btn minus" onclick="changeDay(-1)">-</button>
+				<p>123</p>
+				<button class="btn" onclick="changeDay(1)">+</button>
+			</div>
 		</div>
 		<div class="panel topic">
 			<h1>Example</h1>
@@ -517,7 +575,7 @@
 		);
 
 		const questionModal = document.getElementById('question-modal');
-		questionModal.showModal();
+		// questionModal.showModal();
 	</script>
 </body>
 </html>
