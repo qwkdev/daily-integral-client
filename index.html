@@ -86,17 +86,19 @@
 			margin: 0;
 		}
 		.panel h1 {
-			font-size: calc(3 * var(--u));
+			font-size: calc(2.5 * var(--u));
+			font-weight: 700;
+			margin: calc(.5 * var(--u));
+			margin-right: 0;
+		}
+		.panel h2 {
+			font-size: calc(2.5 * var(--u));
 			font-weight: 700;
 			margin-bottom: calc(.5 * var(--u));
 		}
-		.panel h2 {
-			font-size: calc(1.5 * var(--u));
+		.panel h3 {
+			font-size: calc(2 * var(--u));
 			font-weight: 700;
-		}
-		.panel h3, .panel p {
-			font-size: calc(1.2 * var(--u));
-			font-weight: 500;
 		}
 		.panel .center {
 			position: absolute;
@@ -235,6 +237,7 @@
 			display: flex;
 			align-items: center;
 			gap: calc(1 * var(--u));
+			grid-column: span 2;
 		}
 		.num {
 			display: flex;
@@ -243,7 +246,7 @@
 			gap: calc(.75 * var(--u));
 
 			p {
-				font-size: calc(1.5  * var(--u));
+				font-size: calc(3 * var(--u));
 			}
 			.btn {
 				--h: 0;
@@ -308,6 +311,12 @@
 						font-size: calc(1.5 * var(--u));
 						padding: calc(.2 * var(--u)) calc(.5 * var(--u)) calc(.3 * var(--u)) calc(.5 * var(--u));
 					}
+				}
+				h2 {
+					font-size: calc(1.25 * var(--u));
+					font-weight: 500;
+					margin: 0;
+					text-align: center;
 				}
 
 				#puzzle {
@@ -381,6 +390,17 @@
 				font-size: calc(1.5 * var(--u));
 			}
 		}
+		@media only screen and (max-aspect-ratio: 2/3) {
+			#grid {
+				grid-template-columns: 1fr;
+			}
+			.panel h1 {
+				font-size: calc(3 * var(--u));
+			}
+			#title, #day-select {
+				grid-column: span 1;
+			}
+		}
 	</style>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
@@ -388,10 +408,10 @@
 <body>
 	<div id="grid">
 		<div class="panel" id="title">
-			<h2>ddx.today &bullet; v1.0</h2>
+			<h1>ddx.today &bullet; v1.0</h1>
 		</div>
 		<div class="panel" id="day-select">
-			<h2>Day:</h2>
+			<h1>Day:</h1>
 			<div class="num">
 				<!-- <button class="btn minus" onclick="changeDay(-1)">-</button> -->
 				<p id="day"></p>
@@ -404,7 +424,7 @@
 		</div>
 
 		<div class="panel topic" id="integral" hidden>
-			<h1>Integration</h1>
+			<h2>Integration</h2>
 			<!-- <div class="logo" id="ilogo">&int;</div> -->
 			<button class="btn clr1" onclick="loadPuzzle(this)" data-value="beginner">Beginner</button>
 			<button class="btn clr2" onclick="loadPuzzle(this)" data-value="easy">Easy</button>
@@ -412,13 +432,13 @@
 			<button class="btn clr4" onclick="loadPuzzle(this)" data-value="hard">Hard</button>
 		</div>
 		<div class="panel topic" id="derivative" hidden>
-			<h1>Derivatives</h1>
+			<h2>Derivatives</h2>
 			<button class="btn clr2" onclick="loadPuzzle(this)" data-value="easy">Easy</button>
 			<button class="btn clr3" onclick="loadPuzzle(this)" data-value="medium">Medium</button>
 			<button class="btn clr4" onclick="loadPuzzle(this)" data-value="hard">Hard</button>
 		</div>
 		<div class="panel topic" id="limit" hidden>
-			<h1>Limits</h1>
+			<h2>Limits</h2>
 			<button class="btn clr1" onclick="loadPuzzle(this)" data-value="limit">Limit</button>
 		</div>
 	</div>
@@ -426,7 +446,7 @@
 	<dialog id="question-modal">
 		<div class="modal">
 			<h1 id="puzzleHeader"></h1>
-
+			<h2 id="puzzleTitle"></h2>
 			<div id="puzzle"></div>
 			<div id="check">
 				<input id="answer-input" type="text" inputmode="decimal" placeholder="Type answer here..." oninput="fixInput(this)">
@@ -617,6 +637,8 @@
 			levelSpan.textContent = prettyLevel;
 			puzzleHeader.appendChild(levelSpan);
 			puzzleHeader.appendChild(document.createTextNode(titleCase(type)));
+
+			document.getElementById('puzzleTitle').innerText = info.title;
 
 			renderMath(info.latex, puzzle);
 
