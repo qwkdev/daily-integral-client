@@ -641,5 +641,16 @@
 			.then(init)
 			.catch(e => console.error('Error:', e));
 	</script>
+	<script>
+		fetch('https://qtrack.pythonanywhere.com/visit/ddx', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				's': null,
+				'o': window.location.href || null,
+				'r': document.referrer || null
+			})
+		}).catch(error => console.error('Error fetching visits:', error));
+	</script>
 </body>
 </html>
